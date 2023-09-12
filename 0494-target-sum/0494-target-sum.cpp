@@ -1,17 +1,16 @@
 class Solution {
 public:
-    void rec(int &ans,vector<int>&nums,int sum,int n,int target)
+    
+    int rec(int &ans,vector<int>&nums,int sum,int n,int target)
     {
         if(n==0 && sum==target)
         {
-            ans++;
-            return; 
+            return 1; 
         }
-        if(n==0) return;
+        if(n==0) return 0;
         int sum1=sum-nums[n-1];
         sum=sum+nums[n-1];
-        rec(ans,nums,sum1,n-1,target);
-        rec(ans,nums,sum,n-1,target);
+        return rec(ans,nums,sum1,n-1,target)+rec(ans,nums,sum,n-1,target);
     }
 
 
@@ -19,7 +18,7 @@ public:
         int n=nums.size();
         int sum=0;
         int ans=0;
-        rec(ans,nums,sum,n,target);
-        return ans;
+        
+        return rec(ans,nums,sum,n,target);
     }
 };
