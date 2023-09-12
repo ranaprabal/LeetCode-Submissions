@@ -1,22 +1,20 @@
 class Solution {
 public:
     int numPairsDivisibleBy60(vector<int>& time) {
-        map<int,int>mpp;
         int count=0;
-        for(auto &it : time)
+        int remainder[60]={0};
+        for(auto &it: time)
         {
-            mpp[it%60]++;
-            int toFind=60-(it%60);
-            if(mpp.find(toFind)!=mpp.end() && toFind!=30)
+            if(it%60==0)
             {
-                count+=mpp[toFind];
+                count+=remainder[0];  
             }
-            else if(mpp.find(toFind)!=mpp.end() && toFind==30)
+            else
             {
-                count+=mpp[toFind]-1;
+                count+=remainder[60-(it%60)];
             }
+            remainder[it%60]++;
         }
-        count+=(1ll)*(mpp[0]-1)*(mpp[0])/2;
         return count;
     }
 };
