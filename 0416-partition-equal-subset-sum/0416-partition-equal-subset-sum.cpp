@@ -1,37 +1,26 @@
 class Solution {
 public:
-  bool rec(int t[201][20001],vector<int>&nums,int n,int sum)
-  {
-    if(t[n][sum]!=-1) return t[n][sum];
-    if(sum==0)
-    {
-      t[n][sum]=1;
-      return true;
-    }
-    if(n==0)
-    {
-      t[n][sum]=0;
-      return false;
-    }
-    if(sum>=nums[n-1])
-    {
-      t[n][sum]=(rec(t,nums,n-1,sum) || rec(t,nums,n-1,sum-nums[n-1]));
-      return t[n][sum];
-    }
-    else{
-
-      t[n][sum]= rec(t,nums,n-1,sum);
-      return t[n][sum];
-    } 
-  }
-
-
+  
   bool canPartition(vector<int>& nums) {
     int sum = accumulate(nums.begin(),nums.end(),0);
     if(sum%2) return false;
-    int t[201][20001];
-    memset(t,-1,sizeof(t));
-    return rec(t,nums,nums.size(),sum/2);
+    int n=nums.size();
+    sum/=2;
+    bool t[n+1][sum+1];
+    memset(t,false,sizeof(t));
+    for(int i=0;i<n+1;i++) t[i][0]=true;
+    for(int i=1;i<n+1;i++)
+    {
+      for(int j=1;j<sum+1;j++)
+      {
+        if(j>=nums[i-1])
+        {
+          t[i][j] = (t[i-1][j-nums[i-1]] || t[i-1][j]);
+        }
+        else t[i][j] = t[i-1][j];
+      }
+    }
+    return t[n][sum];
   }
 
 };
