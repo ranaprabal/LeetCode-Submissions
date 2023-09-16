@@ -1,26 +1,35 @@
 class Solution {
 public:
-  
-  bool canPartition(vector<int>& nums) {
-    int sum = accumulate(nums.begin(),nums.end(),0);
-    if(sum%2) return false;
-    int n=nums.size();
-    sum/=2;
-    bool t[n+1][sum+1];
-    memset(t,false,sizeof(t));
-    for(int i=0;i<n+1;i++) t[i][0]=true;
-    for(int i=1;i<n+1;i++)
+    bool rec(vector<vector<int>>&t,vector<int>&nums,int n,int sum)
     {
-      for(int j=1;j<sum+1;j++)
-      {
-        if(j>=nums[i-1])
+        if(t[n][sum]!=-1) return t[n][sum]>0;
+        if(sum==0)
         {
-          t[i][j] = (t[i-1][j-nums[i-1]] || t[i-1][j]);
+            t[n][sum]=1;
+            return t[n][sum]>0;
         }
-        else t[i][j] = t[i-1][j];
-      }
+        if(n==0)
+        {
+            t[n][sum]=0;
+            return t[n][sum]>0;
+        }
+        if(sum>=nums[n-1])
+        {
+            t[n][sum]=(rec(t,nums,n-1,sum-nums[n-1]) + rec(t,nums,n-1,sum));
+            return t[n][sum]>0;
+        }
+        else{
+            t[n][sum]=rec(t,nums,n-1,sum);
+            return t[n][sum]>0;
+        }
     }
-    return t[n][sum];
-  }
 
+    bool canPartition(vector<int>& nums) {
+        int n=nums.size();
+        int totalsum = accumulate(nums.begin(),nums.end(),0);
+        if(totalsum%2) return false;
+        totalsum/=2;
+        vector<vector<int>>t(n+1,vector<int>(totalsum+1,-1));
+        return rec(t,nums,n,totalsum);
+    }
 };
