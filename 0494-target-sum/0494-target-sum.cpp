@@ -32,9 +32,6 @@ public:
         if(target%2) return 0;
         target/=2;
         vector<vector<int>>t(n+1,vector<int>(target+1,-1));
-        // for(int i=0;i<n+1;i++)
-        //     for(int j=0;j<target+1;j++)
-        //         t[i][j]=-1;
         rec(t,nums,n,target);
         return t[n][target];
 
