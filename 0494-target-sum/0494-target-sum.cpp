@@ -1,40 +1,29 @@
 class Solution {
 public:
-    int rec(vector<vector<int>>&t,vector<int>&nums,int n,int sum)
-    {
-        if(t[n][sum]!=-1) return t[n][sum];
-        if(sum==0 && n==0)
-        {
-            t[n][sum]=1;
-            return t[n][sum];
-        }
-        if(n==0)
-        {
-            t[n][sum]=0;
-            return t[n][sum];
-        }
-        if(sum>=nums[n-1])
-        {
-            t[n][sum]=rec(t,nums,n-1,sum)+rec(t,nums,n-1,sum-nums[n-1]);
-            return t[n][sum];
-        }
-        else{
-            t[n][sum]=rec(t,nums,n-1,sum);
-            return t[n][sum];
-        }
-
-    }
     int findTargetSumWays(vector<int>& nums, int target) {
         int n=nums.size();
-        int totalsum = accumulate(nums.begin(),nums.end(),0);
-        if(abs(target)>totalsum) return abs(target)==totalsum;
-        target=totalsum-abs(target);
-        if(target%2) return 0;
-        target/=2;
-        vector<vector<int>>t(n+1,vector<int>(target+1,-1));
-        rec(t,nums,n,target);
-        return t[n][target];
+        int sum = accumulate(nums.begin(),nums.end(),0);
+        if(target>sum) return 0;
+        sum=sum-target;
+        if(sum%2) return 0;
+        sum/=2;
+        int t[n+1][sum+1];
+        for(int i=0;i<sum+1;i++) t[0][i]=0;
+        for(int i=0;i<n+1;i++) t[i][0]=1;
+        for(int i=1;i<n+1;i++){
+            for(int j=0;j<sum+1;j++){
+                if(j>=nums[i-1])
+                    t[i][j]=t[i-1][j-nums[i-1]]+t[i-1][j];
+                else t[i][j]=t[i-1][j];
+            }
+        }
+        // for(int i=0;i<n+1;i++){
+        //     for(int j=0;j<sum+1;j++){
+        //         cout<<t[i][j]<<" ";
+        //     }
+        //     cout<<endl;
+        // }
 
-
+        return t[n][sum];
     }
 };
