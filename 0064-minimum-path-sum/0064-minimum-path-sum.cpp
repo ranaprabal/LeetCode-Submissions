@@ -1,23 +1,25 @@
-int static dp[201][201];
 class Solution {
 public:
-    int rec(int n,int m,vector<vector<int>>& g){
-        if(n<0 || m<0){
-            return INT_MAX - 8000000;
-        }
-        if(dp[n][m]!=-1) return dp[n][m];
-        if(n==0 && m==0){
-            dp[n][m]=g[0][0];
-            return dp[n][m];
-        }
-        dp[n][m] = g[n][m] + min(rec(n-1,m,g),rec(n,m-1,g));
-        return dp[n][m];
-    }
 
     int minPathSum(vector<vector<int>>& g) {
         int n = g.size();
         int m = g[0].size();
-        memset(dp,-1,sizeof(dp));
-        return rec(n-1,m-1,g);
+        int sum=0;
+        int dp[n][m];
+        for(int i=0;i<n;i++){
+            sum+=g[i][0];
+            dp[i][0]=sum;
+        }
+        sum=0;
+        for(int i=0;i<m;i++){
+            sum+=g[0][i];
+            dp[0][i]=sum;
+        }
+        for(int i=1;i<n;i++){
+            for(int j=1;j<m;j++){
+                dp[i][j] = g[i][j] + min(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        return dp[n-1][m-1];
     }
 };
