@@ -3,8 +3,8 @@ public:
     int coinChange(vector<int>& coins, int k) {
         int n=coins.size();
         int t[n+1][k+1];
-        for(int i=0;i<n+1;i++) t[i][0]=0;
         for(int i=0;i<k+1;i++) t[0][i]=INT_MAX-1;
+        for(int i=0;i<n+1;i++) t[i][0]=0;
         for(int i=1;i<k+1;i++){
             if(i%coins[0]==0){
                 t[1][i]=i/coins[0];
