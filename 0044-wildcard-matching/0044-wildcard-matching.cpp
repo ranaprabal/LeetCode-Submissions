@@ -16,7 +16,7 @@ public:
             return dp[n][m] = rec(n-1,m-1,s,p);
         }
         if(p[m-1]=='*'){
-            return dp[n][m] = rec(n-1,m,s,p) || rec(n-1,m-1,s,p) || rec(n,m-1,s,p);
+            return dp[n][m] = rec(n-1,m,s,p) || rec(n,m-1,s,p);
         }
         return dp[n][m] = 0;
     }
