@@ -11,11 +11,20 @@ public:
             return dp[n][prev] = max(1+rec(n-1,n-1,a),rec(n-1,prev,a));
         } 
         return dp[n][prev] = rec(n-1,prev,a);
-        
     }
     int lengthOfLIS(vector<int>& nums) {
-        int n=nums.size();
-        memset(dp,-1,sizeof(dp));
-        return rec(n,n,nums);
+        vector<int> x;
+        for (int num : nums) {
+            auto it = lower_bound(x.begin(), x.end(), num);
+            if (it == x.end()) {
+                x.push_back(num);
+            } else {
+                *it = num;
+            }
+        }
+        return x.size();
+        // int n=nums.size();
+        // memset(dp,-1,sizeof(dp));
+        // return rec(n,n,nums);
     }
 };
