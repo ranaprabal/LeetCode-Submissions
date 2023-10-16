@@ -5,7 +5,7 @@ bool cmp(const string lhs, const string rhs){
 class Solution {
 public:
     int longestStrChain(vector<string>& words) {
-        map<string,int>mpp;
+        unordered_map<string,int>mpp;
         int ans=1;
         sort(words.begin(),words.end(),cmp);
         for(auto &it:words)
