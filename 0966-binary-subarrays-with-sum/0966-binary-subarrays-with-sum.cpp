@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int rec(vector<int>a,int goal){
+    int rec(vector<int>&a,int goal){
         int i=0,j=0,sum=0,ans=0;
         while(j<a.size()){
             sum+=a[j];
