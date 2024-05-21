@@ -7,11 +7,9 @@ public:
             ans.push_back(op);
             return;
         }
-        
-        vector<int>op1=op;
         vector<int>op2=op;
         op2.push_back(ip[i]);
-        cal(i+1,op1,ip,ans);
+        cal(i+1,op,ip,ans);
         cal(i+1,op2,ip,ans);
 
     }
