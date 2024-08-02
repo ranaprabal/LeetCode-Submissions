@@ -7,9 +7,9 @@ public:
         for(int i=0;i<n;i++){
             if(nums[i]==0) cnt++;
         }
-        for(int i=0;i<n;i++){
-            nums.push_back(nums[i]);
-        }
+        // for(int i=0;i<n;i++){
+        //     nums.push_back(nums[i]);
+        // }
         n = nums.size();
         int curr = 0;
         for(int i=0;i<cnt;i++){
@@ -17,14 +17,14 @@ public:
         }
         int i = 0;
         int ans = cnt - curr;
-        for(int j=cnt;j<n;j++){
+        for(int j=cnt;j<2*n;j++){
             // cout<<j<<" "<<cnt<<" "<<curr<<endl;
-            if(nums[j]==0){
+            if(nums[j%n]==0){
                 curr++;
-                if(nums[i]==0) curr--;
+                if(nums[i%n]==0) curr--;
             }
             else{
-                if(nums[i]==0) curr--;
+                if(nums[i%n]==0) curr--;
             }
 
                 ans = min(ans,cnt-curr);
